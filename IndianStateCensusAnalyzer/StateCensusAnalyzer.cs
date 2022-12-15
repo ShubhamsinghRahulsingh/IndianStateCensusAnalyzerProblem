@@ -13,6 +13,8 @@ namespace IndianStateCensusAnalyzer
     {
         public int ReadStateCensusData(string filepath)
         {
+            if (!File.Exists(filepath))
+                throw new StateCensusException(StateCensusException.ExceptionType.FILE_INCORRECT, "Incorrect File Path");
             using (var reader = new StreamReader(filepath))
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
