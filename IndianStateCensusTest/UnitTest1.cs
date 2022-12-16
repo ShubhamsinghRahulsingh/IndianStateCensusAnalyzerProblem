@@ -8,6 +8,7 @@ namespace IndianStateCensusTest
         public static string stateCensusIncorrectTypeCSVFilePath = @"D:\GitRepository\IndianStateCensusAnalyzerProblem\IndianStateCensusAnalyzer\Files\StateCensusData.txt";
         public static string stateCensusIncorrectDelimeterFilePath = @"D:\GitRepository\IndianStateCensusAnalyzerProblem\IndianStateCensusAnalyzer\Files\StateCensusDataDelimeter.csv";
         public static string stateCodeCSVFilePath = @"D:\GitRepository\IndianStateCensusAnalyzerProblem\IndianStateCensusAnalyzer\Files\StateCodeData.csv";
+        public static string stateCodeIncorrectCSVFilePath = @"D:\GitRepository\IndianStateCensusAnalyzerProblem\IndianStateCensusAnalyzer\Files\StateCode.csv";
         [Test]
         //TC1.1
         public void GivenStateCensusData_WhenAnalyzed_ShouldReturnNoOfRecordsMatches()
@@ -80,6 +81,20 @@ namespace IndianStateCensusTest
             StateCodeAnalyzer codeAnalyzer = new StateCodeAnalyzer();
             CSVStateCode stateCode = new CSVStateCode();
             Assert.AreEqual(stateCode.ReadStateCodeData(stateCodeCSVFilePath), codeAnalyzer.ReadStateCodeData(stateCodeCSVFilePath));
+        }
+        [Test]
+        //TC2.2
+        public void GivenStateCodeDataFileIncorrect_WhenAnalyzed_ShouldReturnException()
+        {
+            StateCodeAnalyzer codeAnalyzer = new StateCodeAnalyzer();
+            try
+            {
+                int records = codeAnalyzer.ReadStateCodeData(stateCodeIncorrectCSVFilePath);
+            }
+            catch (StateCensusAndCodeException ex)
+            {
+                Assert.AreEqual(ex.Message, "Incorrect File Path");
+            }
         }
     }
 }
