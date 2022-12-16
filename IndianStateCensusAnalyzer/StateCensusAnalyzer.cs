@@ -17,6 +17,10 @@ namespace IndianStateCensusAnalyzer
                 throw new StateCensusException(StateCensusException.ExceptionType.FILE_INCORRECT, "Incorrect File Path");
             if (!filepath.EndsWith(".csv"))
                 throw new StateCensusException(StateCensusException.ExceptionType.TYPE_INCORRECT, "Incorrect File Type");
+            var read = File.ReadAllLines(filepath);
+            string header = read[0];
+            if (header.Contains("/"))
+                throw new StateCensusException(StateCensusException.ExceptionType.DELIMETER_INCORRECT,"Delimeter is Incorrect");
             using (var reader = new StreamReader(filepath))
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
