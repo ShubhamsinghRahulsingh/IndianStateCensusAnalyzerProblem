@@ -7,6 +7,7 @@ namespace IndianStateCensusTest
         public static string stateCensusIncorrectCSVFilePath = @"D:\GitRepository\IndianStateCensusAnalyzerProblem\IndianStateCensusAnalyzer\Files\StateCensus.csv";
         public static string stateCensusIncorrectTypeCSVFilePath = @"D:\GitRepository\IndianStateCensusAnalyzerProblem\IndianStateCensusAnalyzer\Files\StateCensusData.txt";
         public static string stateCensusIncorrectDelimeterFilePath = @"D:\GitRepository\IndianStateCensusAnalyzerProblem\IndianStateCensusAnalyzer\Files\StateCensusDataDelimeter.csv";
+        public static string stateCodeCSVFilePath = @"D:\GitRepository\IndianStateCensusAnalyzerProblem\IndianStateCensusAnalyzer\Files\StateCodeData.csv";
         [Test]
         //TC1.1
         public void GivenStateCensusData_WhenAnalyzed_ShouldReturnNoOfRecordsMatches()
@@ -24,7 +25,7 @@ namespace IndianStateCensusTest
             {
                 int records=analyzer.ReadStateCensusData(stateCensusIncorrectCSVFilePath);
             }
-            catch(StateCensusException ex)
+            catch(StateCensusAndCodeException ex)
             {
                 Assert.AreEqual(ex.Message, "Incorrect File Path");
             }
@@ -38,7 +39,7 @@ namespace IndianStateCensusTest
             {
                 int records = analyzer.ReadStateCensusData(stateCensusIncorrectTypeCSVFilePath);
             }
-            catch (StateCensusException ex)
+            catch (StateCensusAndCodeException ex)
             {
                 Assert.AreEqual(ex.Message, "Incorrect File Type");
             }
@@ -52,7 +53,7 @@ namespace IndianStateCensusTest
             {
                 int records = analyzer.ReadStateCensusData(stateCensusIncorrectDelimeterFilePath);
             }
-            catch (StateCensusException ex)
+            catch (StateCensusAndCodeException ex)
             {
                 Assert.AreEqual(ex.Message, "Delimeter is Incorrect");
             }
@@ -67,10 +68,18 @@ namespace IndianStateCensusTest
                 bool records = analyzer.ReadStateCensusData(stateCensusIncorrectDelimeterFilePath, "State,Population,AreaInSqKm,DensityPerSqKm");
                 Assert.IsTrue(records);
             }
-            catch (StateCensusException ex)
+            catch (StateCensusAndCodeException ex)
             {
                 Assert.AreEqual(ex.Message, "Header is Incorrect");
             }
+        }
+        [Test]
+        //TC2.1
+        public void GivenStateCodeData_WhenAnalyzed_ShouldReturnNoOfRecordsMatches()
+        {
+            StateCodeAnalyzer codeAnalyzer = new StateCodeAnalyzer();
+            CSVStateCode stateCode = new CSVStateCode();
+            Assert.AreEqual(stateCode.ReadStateCodeData(stateCodeCSVFilePath), codeAnalyzer.ReadStateCodeData(stateCodeCSVFilePath));
         }
     }
 }

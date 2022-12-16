@@ -14,13 +14,13 @@ namespace IndianStateCensusAnalyzer
         public int ReadStateCensusData(string filepath)
         {
             if (!File.Exists(filepath))
-                throw new StateCensusException(StateCensusException.ExceptionType.FILE_INCORRECT, "Incorrect File Path");
+                throw new StateCensusAndCodeException(StateCensusAndCodeException.ExceptionType.FILE_INCORRECT, "Incorrect File Path");
             if (!filepath.EndsWith(".csv"))
-                throw new StateCensusException(StateCensusException.ExceptionType.TYPE_INCORRECT, "Incorrect File Type");
+                throw new StateCensusAndCodeException(StateCensusAndCodeException.ExceptionType.TYPE_INCORRECT, "Incorrect File Type");
             var read = File.ReadAllLines(filepath);
             string header = read[0];
             if (header.Contains("/"))
-                throw new StateCensusException(StateCensusException.ExceptionType.DELIMETER_INCORRECT,"Delimeter is Incorrect");
+                throw new StateCensusAndCodeException(StateCensusAndCodeException.ExceptionType.DELIMETER_INCORRECT,"Delimeter is Incorrect");
             using (var reader = new StreamReader(filepath))
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
@@ -39,7 +39,7 @@ namespace IndianStateCensusAnalyzer
             if (header.Equals(actualHeader))
                 return true;
             else
-                throw new StateCensusException(StateCensusException.ExceptionType.HEADER_INCORRECT, "Header is Incorrect");
+                throw new StateCensusAndCodeException(StateCensusAndCodeException.ExceptionType.HEADER_INCORRECT, "Header is Incorrect");
         }
     }
 }
