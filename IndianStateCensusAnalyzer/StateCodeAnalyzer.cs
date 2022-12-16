@@ -31,5 +31,14 @@ namespace IndianStateCensusAnalyzer
                 return records.Count() - 1;
             }
         }
+        public bool ReadStateCodeData(string filepath, string actualHeader)
+        {
+            var read = File.ReadAllLines(filepath);
+            string header = read[0];
+            if (header.Equals(actualHeader))
+                return true;
+            else
+                throw new StateCensusAndCodeException(StateCensusAndCodeException.ExceptionType.HEADER_INCORRECT, "Header is Incorrect");
+        }
     }
 }
